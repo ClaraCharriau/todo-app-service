@@ -2,9 +2,10 @@ package com.project.todoapp.endpoint;
 
 import com.project.todoapp.dto.TaskDto;
 import com.project.todoapp.exception.TaskNotFoundException;
-import com.project.todoapp.model.TaskEntity;
+import com.project.todoapp.exception.ZeroTaskFoundException;
 import com.project.todoapp.service.ToDoListService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,18 +20,31 @@ public class ToDoListController {
     private ToDoListService toDoListService;
 
     @GetMapping
-    public List<TaskDto> getTodos() {
-        return toDoListService.getToDoList();
+    public ResponseEntity<List<TaskDto>> getTodos() throws ZeroTaskFoundException {
+        try {
+            return toDoListService.getToDoList();
+        } catch (ZeroTaskFoundException e) {
+            throw e;
+        }
     }
 
-    @GetMapping("{id}")
-    public TaskDto getTask(@PathVariable("id") long id) throws TaskNotFoundException {
-        return toDoListService.getTask(id);
+    @GetMapping("/{id}")
+    public ResponseEntity<TaskDto> getTask(@PathVariable("id") UUID id) throws TaskNotFoundException {
+
+        try {
+            return toDoListService.getTask(id);
+        } catch (TaskNotFoundException e) {
+            throw e;
+        }
     }
 
-    @DeleteMapping("{id}")
-    public void deleteTask(@PathVariable("id") long id) throws TaskNotFoundException {
-        toDoListService.deleteTask(id);
+    @DeleteMapping("/{id}")
+    public void deleteTask(@PathVariable("id") UUID id) throws TaskNotFoundException {
+        try {
+            toDoListService.deleteTask(id);
+        } catch (TaskNotFoundException e) {
+            throw e;
+        }
     }
 
     @PostMapping()
@@ -38,7 +52,7 @@ public class ToDoListController {
         toDoListService.addTask(newTaskDto);
     }
 
-    @PatchMapping("{id}")
+    @PatchMapping("/{id}")
     public void updateTask(@RequestBody TaskDto updatedTaskDto, @PathVariable UUID id) throws TaskNotFoundException {
         toDoListService.updateTask(updatedTaskDto, id);
     }
