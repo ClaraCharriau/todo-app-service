@@ -1,6 +1,7 @@
-package com.project.todoapp.dao;
+package com.project.todoapp.endpoint;
 
-import com.project.todoapp.model.Task;
+import com.project.todoapp.exception.TaskNotFoundException;
+import com.project.todoapp.model.TaskEntity;
 import com.project.todoapp.service.ToDoListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,28 +18,28 @@ public class ToDoListController {
     private ToDoListService toDoListService;
 
     @GetMapping
-    public List<Task> getTodos() {
+    public List<TaskEntity> getTodos() {
         return toDoListService.getToDoList();
     }
 
     @GetMapping("{id}")
-    public Task getTask(@PathVariable long id) {
+    public TaskEntity getTask(@PathVariable("id") long id) throws TaskNotFoundException {
         return toDoListService.getTask(id);
     }
 
     @DeleteMapping("{id}")
-    public void deleteTask(@PathVariable long id) {
+    public void deleteTask(@PathVariable("id") long id) throws TaskNotFoundException {
         toDoListService.deleteTask(id);
     }
 
     @PostMapping()
-    public void addTask(@RequestBody Task newTask) {
-        toDoListService.addTask(newTask);
+    public void addTask(@RequestBody TaskEntity newTaskEntity) {
+        toDoListService.addTask(newTaskEntity);
     }
 
     @PatchMapping("{id}")
-    public void updateTask(@RequestBody Task updatedTask, @PathVariable UUID id) {
-        toDoListService.updateTask(updatedTask, id);
+    public void updateTask(@RequestBody TaskEntity updatedTaskEntity, @PathVariable UUID id) throws TaskNotFoundException {
+        toDoListService.updateTask(updatedTaskEntity, id);
     }
 
 }

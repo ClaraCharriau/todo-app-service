@@ -1,6 +1,6 @@
 package com.project.todoapp.service;
 
-import com.project.todoapp.model.Task;
+import com.project.todoapp.model.TaskEntity;
 import com.project.todoapp.repository.ToDoListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,15 +15,15 @@ public class ToDoListService {
     @Autowired
     private ToDoListRepository toDoListRepository;
 
-    public List<Task> getToDoList() {
-        List<Task> toDoList = new ArrayList<>();
-        toDoListRepository.findAll().forEach(task -> {
-            toDoList.add(task);
+    public List<TaskEntity> getToDoList() {
+        List<TaskEntity> toDoList = new ArrayList<>();
+        toDoListRepository.findAll().forEach(taskEntity -> {
+            toDoList.add(taskEntity);
         });
         return toDoList;
     }
 
-    public Task getTask(long id) {
+    public TaskEntity getTask(long id) {
         return toDoListRepository.findById(id).orElse(null);
     }
 
@@ -31,12 +31,12 @@ public class ToDoListService {
         toDoListRepository.deleteById(id);
     }
 
-    public void addTask(Task newTask) {
-        toDoListRepository.save(newTask);
+    public void addTask(TaskEntity newTaskEntity) {
+        toDoListRepository.save(newTaskEntity);
     }
 
-    public void updateTask(Task updatedTask, UUID id) {
-        toDoListRepository.save(updatedTask);
+    public void updateTask(TaskEntity updatedTaskEntity, UUID id) {
+        toDoListRepository.save(updatedTaskEntity);
     }
 
 }
