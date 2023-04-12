@@ -1,24 +1,28 @@
-package com.project.todoapp.model;
+package com.project.todoapp.dto;
 
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Task {
+public class TaskDto {
 
     @Id
     @GeneratedValue
     private UUID id;
 
+    @NotBlank
     private String content;
 
+    @NonNull
     private String category;
 
     private boolean urgent;
