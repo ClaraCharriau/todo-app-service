@@ -1,7 +1,7 @@
-package com.project.todoApp.dao;
+package com.project.todoapp.dao;
 
-import com.project.todoApp.model.Task;
-import com.project.todoApp.service.ToDoListService;
+import com.project.todoapp.model.Task;
+import com.project.todoapp.service.ToDoListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

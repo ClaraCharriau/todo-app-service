@@ -1,9 +1,9 @@
-package com.project.todoApp.model;
+package com.project.todoapp.model;
 
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -23,6 +23,6 @@ public class Task {
 
     private boolean urgent;
 
-    private LocalDate doneDate;
+    private LocalDateTime doneDate;
 
 }
