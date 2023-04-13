@@ -13,7 +13,7 @@ A simple Todolist application REST service, that connect with a PostgreSQL datab
 - Writing a RESTful service using annotations, supporting JSON requests and responses
 - Personnalized exceptions
 - Spring Data integration
-- Entities to Dto mapping
+- Entities to Dto mapping with Mapstruct
 - Unit testing with JUnit 5
 
 ### Get all Todos
