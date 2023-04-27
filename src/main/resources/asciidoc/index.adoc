@@ -1,0 +1,21 @@
+= Todolist API Documentation
+
+== getTodos()
+
+operation::gettodolist[snippets='http-request,http-response']
+
+== getTask()
+
+operation::gettask[snippets='http-request,http-response']
+
+== deleteTask()
+
+operation::deletetask[snippets='http-request,http-response']
+
+== createTask()
+
+operation::createtask[snippets='http-request,http-response']
+
+== updateTask()
+
+operation::updatetask[snippets='http-request,http-response']
