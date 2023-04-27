@@ -7,8 +7,6 @@ import com.project.todoapp.mapper.TaskMapper;
 import com.project.todoapp.model.TaskEntity;
 import com.project.todoapp.repository.ToDoListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,9 +19,8 @@ public class ToDoListService {
     @Autowired
     private ToDoListRepository toDoListRepository;
 
-    public ResponseEntity<List<TaskDto>> getToDoList() throws ZeroTaskFoundException {
+    public List<TaskDto> getToDoList() throws ZeroTaskFoundException {
         List<TaskDto> toDoList = new ArrayList<>();
-
         if(toDoListRepository.findAll().isEmpty()) {
             throw new ZeroTaskFoundException("Zero task found.");
         }
@@ -31,17 +28,16 @@ public class ToDoListService {
             TaskDto taskDto = TaskMapper.INSTANCE.toDto(taskEntity);
             toDoList.add(taskDto);
         });
-        return new ResponseEntity<>(toDoList, HttpStatus.OK);
+        return toDoList;
     }
 
-    public ResponseEntity<TaskDto> getTask(UUID id) throws TaskNotFoundException {
+    public TaskDto getTask(UUID id) throws TaskNotFoundException {
         if(!toDoListRepository.existsById(id)) {
             throw new TaskNotFoundException(id);
         }
-
         TaskEntity taskEntity = toDoListRepository.findById(id).orElse(null);
         TaskDto taskDto = TaskMapper.INSTANCE.toDto(taskEntity);
-        return new ResponseEntity<>(taskDto, HttpStatus.OK);
+        return taskDto;
     }
 
     public void deleteTask(UUID id) throws TaskNotFoundException {
@@ -51,9 +47,14 @@ public class ToDoListService {
         toDoListRepository.deleteById(id);
     }
 
-    public void addTask(TaskDto newTaskDto) {
+    public boolean addTask(TaskDto newTaskDto) {
         TaskEntity newTaskEntity = TaskMapper.INSTANCE.toEntity(newTaskDto);
-        toDoListRepository.save(newTaskEntity);
+        var savedTask = toDoListRepository.save(newTaskEntity);
+        if(savedTask != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void updateTask(TaskDto updatedTaskDto, UUID id) throws TaskNotFoundException {

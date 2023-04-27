@@ -5,7 +5,7 @@ import com.project.todoapp.exception.TaskNotFoundException;
 import com.project.todoapp.exception.ZeroTaskFoundException;
 import com.project.todoapp.service.ToDoListService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,39 +20,29 @@ public class ToDoListController {
     private ToDoListService toDoListService;
 
     @GetMapping
-    public ResponseEntity<List<TaskDto>> getTodos() throws ZeroTaskFoundException {
-        try {
-            return toDoListService.getToDoList();
-        } catch (ZeroTaskFoundException e) {
-            throw e;
-        }
+    public List<TaskDto> getTodos() throws ZeroTaskFoundException {
+        return toDoListService.getToDoList();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TaskDto> getTask(@PathVariable("id") UUID id) throws TaskNotFoundException {
-
-        try {
-            return toDoListService.getTask(id);
-        } catch (TaskNotFoundException e) {
-            throw e;
-        }
+    public TaskDto getTask(@PathVariable("id") UUID id) throws TaskNotFoundException {
+        return toDoListService.getTask(id);
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void deleteTask(@PathVariable("id") UUID id) throws TaskNotFoundException {
-        try {
-            toDoListService.deleteTask(id);
-        } catch (TaskNotFoundException e) {
-            throw e;
-        }
+        toDoListService.deleteTask(id);
     }
 
     @PostMapping()
-    public void addTask(@RequestBody TaskDto newTaskDto) {
-        toDoListService.addTask(newTaskDto);
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public void createTask(@RequestBody TaskDto newTaskDto) {
+        boolean isCreated = toDoListService.addTask(newTaskDto);
     }
 
     @PatchMapping("/{id}")
+    @ResponseStatus(value = HttpStatus.OK)
     public void updateTask(@RequestBody TaskDto updatedTaskDto, @PathVariable UUID id) throws TaskNotFoundException {
         toDoListService.updateTask(updatedTaskDto, id);
     }
