@@ -1,21 +1,38 @@
 = Todolist API Documentation
+:source-highlighter: highlightjs
 
-== getTodos()
-
+== Get all todos
+A *GET* request that gets all existing todos.
+include::{snippets}/gettodolist/curl-request.adoc[]
 operation::gettodolist[snippets='http-request,http-response']
+=== Response fields
+include::{snippets}/gettodolist/response-fields.adoc[]
 
-== getTask()
-
+== Get a task
+A *GET* request that gets a task.
+include::{snippets}/gettask/curl-request.adoc[]
+=== Path parameters
+include::{snippets}/gettask/path-parameters.adoc[]
 operation::gettask[snippets='http-request,http-response']
+=== Response fields
+include::{snippets}/gettask/response-fields.adoc[]
 
-== deleteTask()
-
+== Delete a task
+A *DELETE* request that deletes a task.
+include::{snippets}/deletetask/curl-request.adoc[]
 operation::deletetask[snippets='http-request,http-response']
 
-== createTask()
-
+== Create a task
+A *POST* request that creates a task.
+include::{snippets}/createtask/curl-request.adoc[]
 operation::createtask[snippets='http-request,http-response']
+=== Request fields
+include::{snippets}/createtask/request-fields.adoc[]
+//include::{snippets}/createtask/response-headers.adoc[]
 
-== updateTask()
-
+== Update a task
+A *PATCH* request that updates a task.
+include::{snippets}/updatetask/curl-request.adoc[]
+=== Path parameters
+include::{snippets}/updatetask/path-parameters.adoc[]
 operation::updatetask[snippets='http-request,http-response']
