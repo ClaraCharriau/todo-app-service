@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
+import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
@@ -71,11 +72,11 @@ class TodoListControllerDocumentationTest {
                 .andExpect(status().isOk())
                 .andDo(document("gettodolist",
                         responseFields(
-                                fieldWithPath("[].id").description(uuidOne),
-                                fieldWithPath("[].content").description("test"),
-                                fieldWithPath("[].category").description("bills"),
-                                fieldWithPath("[].urgent").description(true),
-                                fieldWithPath("[].doneDate").description("").optional())));
+                                fieldWithPath("[].id").description("the task id").type(JsonFieldType.STRING),
+                                fieldWithPath("[].content").description("the task description").type(JsonFieldType.STRING),
+                                fieldWithPath("[].category").description("the task category").type(JsonFieldType.STRING),
+                                fieldWithPath("[].urgent").description("the task priority").type(JsonFieldType.BOOLEAN),
+                                fieldWithPath("[].doneDate").description("the done date").type(JsonFieldType.STRING).optional())));
     }
 
     @Test
@@ -88,13 +89,13 @@ class TodoListControllerDocumentationTest {
                 .andExpect(status().isOk())
                 .andDo(document("gettask",
                         pathParameters(
-                                parameterWithName("id").description("ID of the task to get")),
+                                parameterWithName("id").description("ID of searched the task")),
                         responseFields(
-                                fieldWithPath("id").description(uuidOne),
-                                fieldWithPath("content").description("test"),
-                                fieldWithPath("category").description("bills"),
-                                fieldWithPath("urgent").description(true),
-                                fieldWithPath("doneDate").description("").optional())));
+                                fieldWithPath("id").description("the task id").type(JsonFieldType.STRING),
+                                fieldWithPath("content").description("the task description").type(JsonFieldType.STRING),
+                                fieldWithPath("category").description("the task category").type(JsonFieldType.STRING),
+                                fieldWithPath("urgent").description("the task priority").type(JsonFieldType.BOOLEAN),
+                                fieldWithPath("doneDate").description("the done date").type(JsonFieldType.STRING).optional())));
 
     }
 
@@ -114,12 +115,12 @@ class TodoListControllerDocumentationTest {
                 .contentType(APPLICATION_JSON)).andExpect(status().isCreated())
                 .andDo(document("createtask",
                         requestFields(
-                                fieldWithPath("id").description(uuidOne),
-                                fieldWithPath("content").description("test"),
-                                fieldWithPath("category").description("bills"),
-                                fieldWithPath("urgent").description(true),
-                                fieldWithPath("doneDate").description("").optional())
-                        //,
+                                fieldWithPath("id").description("the task id").type(JsonFieldType.STRING),
+                                fieldWithPath("content").description("the task description").type(JsonFieldType.STRING),
+                                fieldWithPath("category").description("the task category").type(JsonFieldType.STRING),
+                                fieldWithPath("urgent").description("the task priority").type(JsonFieldType.BOOLEAN),
+                                fieldWithPath("doneDate").description("the done date").type(JsonFieldType.STRING).optional())
+        //,
                 // TODO: redirect after creation
                 //responseHeaders(
                 //        headerWithName("location").description("The location of the new resource.")
@@ -137,11 +138,11 @@ class TodoListControllerDocumentationTest {
                         pathParameters(
                                 parameterWithName("id").description("ID of the task to get")),
                         requestFields(
-                                fieldWithPath("id").description(uuidOne),
-                                fieldWithPath("content").description("test"),
-                                fieldWithPath("category").description("bills"),
-                                fieldWithPath("urgent").description(true),
-                                fieldWithPath("doneDate").description("").optional())));
+                                fieldWithPath("id").description("the task id").type(JsonFieldType.STRING),
+                                fieldWithPath("content").description("the task description").type(JsonFieldType.STRING),
+                                fieldWithPath("category").description("the task category").type(JsonFieldType.STRING),
+                                fieldWithPath("urgent").description("the task priority").type(JsonFieldType.BOOLEAN),
+                                fieldWithPath("doneDate").description("the done date").type(JsonFieldType.STRING).optional())));
     }
 
 }
