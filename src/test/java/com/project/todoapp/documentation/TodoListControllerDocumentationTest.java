@@ -1,6 +1,7 @@
-package com.project.todoapp.endpoint;
+package com.project.todoapp.documentation;
 
 import com.project.todoapp.dto.TaskDto;
+import com.project.todoapp.endpoint.ToDoListController;
 import com.project.todoapp.service.ToDoListService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -30,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(MockitoExtension.class)
 @DisplayName("Unit tests on ToDoListController")
 @AutoConfigureRestDocs
-class ToDoListControllerTest {
+class TodoListControllerDocumentationTest {
 
     @Autowired
     private MockMvc mockMvc;
