@@ -1,0 +1,12 @@
+version: "3.4"
+
+services:
+  postgres:
+    container_name: todolist-container
+    image: postgres:15
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=todolist
+      - POSTGRES_USER=todouser
+      - POSTGRES_PASSWORD=todopassword
