@@ -1,0 +1,10 @@
+spring:
+  config:
+    activate:
+      on-profile: it
+  jpa:
+    show-sql: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/todolist
+    username: todouser
+    password: todopassword
