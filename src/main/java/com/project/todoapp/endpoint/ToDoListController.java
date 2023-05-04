@@ -42,7 +42,7 @@ public class ToDoListController {
     }
 
     @PatchMapping("/{id}")
-    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseStatus(value = HttpStatus.CREATED)
     public void updateTask(@RequestBody TaskDto updatedTaskDto, @PathVariable UUID id) throws TaskNotFoundException {
         toDoListService.updateTask(updatedTaskDto, id);
     }

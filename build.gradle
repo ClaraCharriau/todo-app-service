@@ -41,6 +41,7 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 	testImplementation 'com.ninja-squad:DbSetup:2.1.0'
+	testImplementation 'io.rest-assured:rest-assured:5.3.0'
 }
 
 tasks.named('test') {
