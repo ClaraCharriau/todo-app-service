@@ -42,6 +42,7 @@ public class ToDoListService {
 
     public UUID createTask(TaskDto newTaskDto) {
         TaskEntity newTaskEntity = TaskMapper.INSTANCE.toEntity(newTaskDto);
+        // TODO : create already existing task exception
         var savedTask = toDoListRepository.save(newTaskEntity);
         return savedTask.getId();
     }

@@ -8,6 +8,7 @@ import com.project.todoapp.model.TaskEntity;
 import com.project.todoapp.repository.ToDoListRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -20,6 +21,7 @@ import java.util.*;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @DisplayName("Todo Service Tests")
@@ -156,5 +158,70 @@ class ToDoListServiceTest {
         verify(toDoListRepository, times(1)).save(taskEntity);
         assertThat(taskDto).isNotNull().extracting(TaskDto::getId, TaskDto::getContent, TaskDto::getDoneDate, TaskDto::getCategory, TaskDto::isUrgent)
                 .containsExactly(taskEntity.getId(), taskEntity.getContent(), taskEntity.getDoneDate(), taskEntity.getCategory(), taskEntity.isUrgent());
+    }
+
+    @Nested
+    @DisplayName("Exceptions tests on service")
+    class ToDoListServiceExceptionTest {
+
+        @Test
+        @DisplayName("should throw ZeroTaskFoundException when getting a todolist")
+        void should_throw_zerotaskfoundexception_when_getting_a_todolist() {
+            // When
+            Throwable exception = assertThrows(ZeroTaskFoundException.class, () -> toDoListService.getToDoList());
+
+            // Then
+            assertThat(exception).isNotNull();
+            assertThat(exception).isExactlyInstanceOf(ZeroTaskFoundException.class);
+            assertThat(exception.getMessage()).isEqualTo("Zero task found.");
+        }
+
+        @Test
+        @DisplayName("should throw TaskNotFoundException when getting one task")
+        void should_throw_task_not_found_exception_when_getting_a_task() {
+            // When
+            Throwable exception = assertThrows(TaskNotFoundException.class, () -> toDoListService.getTask(taskId));
+
+            // Then
+            assertThat(exception).isNotNull();
+            assertThat(exception).isExactlyInstanceOf(TaskNotFoundException.class);
+            assertThat(exception.getMessage()).isEqualTo("Task with id : %s not found.", taskId);
+        }
+
+        @Test
+        @DisplayName("should throw TaskNotFoundException when deleting task")
+        void should_throw_task_not_found_exception_on_delete() {
+            // Given
+            when(toDoListRepository.existsById(taskId)).thenReturn(false);
+
+            // When
+            Throwable exception = assertThrows(TaskNotFoundException.class, () -> toDoListService.deleteTask(taskId));
+
+            // Then
+            assertThat(exception).isNotNull();
+            assertThat(exception).isExactlyInstanceOf(TaskNotFoundException.class);
+            assertThat(exception.getMessage()).isEqualTo("Task with id : %s not found.", taskId);
+        }
+
+        @Test
+        @DisplayName("should throw TaskNotFoundException when updating task")
+        void should_throw_task_not_found_exception_on_update() {
+            // Given
+            when(toDoListRepository.existsById(taskId)).thenReturn(false);
+
+            // When
+            Throwable exception = assertThrows(TaskNotFoundException.class, () -> toDoListService.updateTask(taskDto, taskId));
+
+            // Then
+            assertThat(exception).isNotNull();
+            assertThat(exception).isExactlyInstanceOf(TaskNotFoundException.class);
+            assertThat(exception.getMessage()).isEqualTo("Task with id : %s not found.", taskId);
+        }
+
+        @Test
+        @DisplayName("should throws Task Already Exist exception when creating task")
+        void should_throw_task_already_exists_exception_on_create() {
+
+        }
     }
 }
