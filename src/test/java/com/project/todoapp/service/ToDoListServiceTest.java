@@ -1,6 +1,7 @@
 package com.project.todoapp.service;
 
 import com.project.todoapp.dto.TaskDto;
+import com.project.todoapp.exception.TaskAlreadyExistException;
 import com.project.todoapp.exception.TaskNotFoundException;
 import com.project.todoapp.exception.ZeroTaskFoundException;
 import com.project.todoapp.mapper.TaskMapper;
@@ -126,7 +127,7 @@ class ToDoListServiceTest {
 
     @Test
     @DisplayName("should create a task")
-    void should_create_a_task() {
+    void should_create_a_task() throws TaskAlreadyExistException {
         // Given
         when(toDoListRepository.save(taskEntity)).thenReturn(taskEntity);
 
@@ -221,7 +222,16 @@ class ToDoListServiceTest {
         @Test
         @DisplayName("should throws Task Already Exist exception when creating task")
         void should_throw_task_already_exists_exception_on_create() {
+            // Given
+            when(toDoListRepository.existsById(taskId)).thenReturn(true);
 
+            // When
+            Throwable exception = assertThrows(TaskAlreadyExistException.class, () -> toDoListService.createTask(taskDto));
+
+            // Then
+            assertThat(exception).isNotNull();
+            assertThat(exception).isExactlyInstanceOf(TaskAlreadyExistException.class);
+            assertThat(exception.getMessage()).isEqualTo("Task with id : %s already exists.", taskId);
         }
     }
 }

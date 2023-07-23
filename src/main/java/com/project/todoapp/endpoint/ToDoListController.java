@@ -1,6 +1,7 @@
 package com.project.todoapp.endpoint;
 
 import com.project.todoapp.dto.TaskDto;
+import com.project.todoapp.exception.TaskAlreadyExistException;
 import com.project.todoapp.exception.TaskNotFoundException;
 import com.project.todoapp.exception.ZeroTaskFoundException;
 import com.project.todoapp.service.ToDoListService;
@@ -37,7 +38,7 @@ public class ToDoListController {
 
     @PostMapping()
     @ResponseStatus(value = HttpStatus.CREATED)
-    public void createTask(@RequestBody TaskDto newTaskDto) {
+    public void createTask(@RequestBody TaskDto newTaskDto) throws TaskAlreadyExistException {
         toDoListService.createTask(newTaskDto);
     }
 

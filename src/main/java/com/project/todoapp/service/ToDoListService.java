@@ -1,6 +1,7 @@
 package com.project.todoapp.service;
 
 import com.project.todoapp.dto.TaskDto;
+import com.project.todoapp.exception.TaskAlreadyExistException;
 import com.project.todoapp.exception.TaskNotFoundException;
 import com.project.todoapp.exception.ZeroTaskFoundException;
 import com.project.todoapp.mapper.TaskMapper;
@@ -40,9 +41,12 @@ public class ToDoListService {
         toDoListRepository.deleteById(id);
     }
 
-    public UUID createTask(TaskDto newTaskDto) {
+    public UUID createTask(TaskDto newTaskDto) throws TaskAlreadyExistException {
+        var uuid = newTaskDto.getId();
+        if(toDoListRepository.existsById(uuid)) {
+            throw new TaskAlreadyExistException(uuid);
+        }
         TaskEntity newTaskEntity = TaskMapper.INSTANCE.toEntity(newTaskDto);
-        // TODO : create already existing task exception
         var savedTask = toDoListRepository.save(newTaskEntity);
         return savedTask.getId();
     }
