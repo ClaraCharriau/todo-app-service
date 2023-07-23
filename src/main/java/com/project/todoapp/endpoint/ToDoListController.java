@@ -38,7 +38,7 @@ public class ToDoListController {
     @PostMapping()
     @ResponseStatus(value = HttpStatus.CREATED)
     public void createTask(@RequestBody TaskDto newTaskDto) {
-        boolean isCreated = toDoListService.addTask(newTaskDto);
+        toDoListService.createTask(newTaskDto);
     }
 
     @PatchMapping("/{id}")

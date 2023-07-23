@@ -5,6 +5,9 @@ import com.project.todoapp.model.TaskEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Mapper
 public interface TaskMapper {
 
@@ -13,4 +16,6 @@ public interface TaskMapper {
     TaskEntity toEntity(TaskDto taskDto);
 
     TaskDto toDto(TaskEntity taskEntity);
+
+    List<TaskDto> toDto(List<TaskEntity> taskEntities);
 }

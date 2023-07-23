@@ -9,7 +9,6 @@ import com.project.todoapp.repository.ToDoListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,15 +19,10 @@ public class ToDoListService {
     private ToDoListRepository toDoListRepository;
 
     public List<TaskDto> getToDoList() throws ZeroTaskFoundException {
-        List<TaskDto> toDoList = new ArrayList<>();
         if(toDoListRepository.findAll().isEmpty()) {
             throw new ZeroTaskFoundException("Zero task found.");
         }
-        toDoListRepository.findAll().forEach(taskEntity -> {
-            TaskDto taskDto = TaskMapper.INSTANCE.toDto(taskEntity);
-            toDoList.add(taskDto);
-        });
-        return toDoList;
+        return TaskMapper.INSTANCE.toDto(toDoListRepository.findAll());
     }
 
     public TaskDto getTask(UUID id) throws TaskNotFoundException {
@@ -36,8 +30,7 @@ public class ToDoListService {
             throw new TaskNotFoundException(id);
         }
         TaskEntity taskEntity = toDoListRepository.findById(id).orElse(null);
-        TaskDto taskDto = TaskMapper.INSTANCE.toDto(taskEntity);
-        return taskDto;
+        return TaskMapper.INSTANCE.toDto(taskEntity);
     }
 
     public void deleteTask(UUID id) throws TaskNotFoundException {
@@ -47,14 +40,10 @@ public class ToDoListService {
         toDoListRepository.deleteById(id);
     }
 
-    public boolean addTask(TaskDto newTaskDto) {
+    public UUID createTask(TaskDto newTaskDto) {
         TaskEntity newTaskEntity = TaskMapper.INSTANCE.toEntity(newTaskDto);
         var savedTask = toDoListRepository.save(newTaskEntity);
-        if(savedTask != null) {
-            return true;
-        } else {
-            return false;
-        }
+        return savedTask.getId();
     }
 
     public void updateTask(TaskDto updatedTaskDto, UUID id) throws TaskNotFoundException {

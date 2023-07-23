@@ -13,6 +13,8 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
+@EqualsAndHashCode
 public class TaskEntity {
 
     @Id
