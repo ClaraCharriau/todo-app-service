@@ -14,7 +14,10 @@ A simple Todolist application REST service, that connect with a PostgreSQL datab
 - Personnalized exceptions
 - Spring Data integration
 - Entities to Dto mapping with Mapstruct
-- Unit testing with JUnit 5
+- Unit testing with JUnit 5, Mockito
+- Documentation test with Spring RestDocs
+- Integration test with DBSetup, RestAssured
+- Docker Compose
 
 ### Get all Todos
 ```json
