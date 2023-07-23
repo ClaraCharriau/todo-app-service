@@ -4,7 +4,6 @@ import com.project.todoapp.dto.TaskDto;
 import com.project.todoapp.exception.TaskAlreadyExistException;
 import com.project.todoapp.exception.TaskNotFoundException;
 import com.project.todoapp.exception.ZeroTaskFoundException;
-import com.project.todoapp.mapper.TaskMapper;
 import com.project.todoapp.model.TaskEntity;
 import com.project.todoapp.repository.ToDoListRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,8 +32,6 @@ class ToDoListServiceTest {
     ToDoListService toDoListService;
     @Mock
     ToDoListRepository toDoListRepository;
-    @Mock
-    TaskMapper taskMapper;
     TaskEntity taskEntity;
     TaskDto taskDto;
     UUID taskId;

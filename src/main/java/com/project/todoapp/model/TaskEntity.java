@@ -25,7 +25,7 @@ public class TaskEntity {
     @NotBlank
     private String content;
 
-    @NonNull
+    @NotBlank
     private String category;
 
     private boolean urgent;

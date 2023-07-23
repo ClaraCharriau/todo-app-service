@@ -154,10 +154,20 @@ class ToDoListControllerIT {
     }
 
     @Test
-    @Disabled
-    @DisplayName("should throw exception if already exists in a put")
-    void shouldThrowExceptionIfAlreadyExistsInAPut() {
-        // TODO: Create already exists exception
+    @DisplayName("should throw exception if already exists in a patch")
+    void shouldThrowExceptionIfAlreadyExistsInAPatch() {
+        UUID id = UUID.randomUUID();
+
+        given()
+                .pathParam("taskId", id)
+                .when()
+                .patch("/{taskId}")
+                .then()
+                .log().ifValidationFails()
+                .statusCode(404)
+                .body("code", is("404"))
+                .body("message", containsString("Task with id : " + id + " already exists."))
+                .body("requestedURI", containsString("/todolist/" + id));
     }
 
     @Test

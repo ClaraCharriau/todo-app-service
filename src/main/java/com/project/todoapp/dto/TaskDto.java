@@ -23,7 +23,7 @@ public class TaskDto {
     @NotBlank
     private String content;
 
-    @NonNull
+    @NotBlank
     private String category;
 
     private boolean urgent;

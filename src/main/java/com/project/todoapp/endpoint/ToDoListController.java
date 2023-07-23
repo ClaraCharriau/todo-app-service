@@ -5,6 +5,7 @@ import com.project.todoapp.exception.TaskAlreadyExistException;
 import com.project.todoapp.exception.TaskNotFoundException;
 import com.project.todoapp.exception.ZeroTaskFoundException;
 import com.project.todoapp.service.ToDoListService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -38,13 +39,13 @@ public class ToDoListController {
 
     @PostMapping()
     @ResponseStatus(value = HttpStatus.CREATED)
-    public void createTask(@RequestBody TaskDto newTaskDto) throws TaskAlreadyExistException {
+    public void createTask(@RequestBody @Valid TaskDto newTaskDto) throws TaskAlreadyExistException {
         toDoListService.createTask(newTaskDto);
     }
 
     @PatchMapping("/{id}")
     @ResponseStatus(value = HttpStatus.CREATED)
-    public void updateTask(@RequestBody TaskDto updatedTaskDto, @PathVariable UUID id) throws TaskNotFoundException {
+    public void updateTask(@RequestBody @Valid TaskDto updatedTaskDto, @PathVariable UUID id) throws TaskNotFoundException {
         toDoListService.updateTask(updatedTaskDto, id);
     }
 
