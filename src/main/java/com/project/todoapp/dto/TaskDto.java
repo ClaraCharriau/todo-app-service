@@ -13,6 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode
 public class TaskDto {
 
     @Id
@@ -22,7 +23,7 @@ public class TaskDto {
     @NotBlank
     private String content;
 
-    @NonNull
+    @NotBlank
     private String category;
 
     private boolean urgent;

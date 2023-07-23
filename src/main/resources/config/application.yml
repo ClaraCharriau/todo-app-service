@@ -14,13 +14,6 @@ spring:
     driverClassName: org.postgresql.Driver
   jpa:
     show-sql: true
-  security:
-    oauth2:
-      client:
-        registration:
-          github:
-            client-id:
-            client-secret:
 
 server:
   port: 8080

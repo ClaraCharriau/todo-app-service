@@ -13,6 +13,8 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
+@EqualsAndHashCode
 public class TaskEntity {
 
     @Id
@@ -23,7 +25,7 @@ public class TaskEntity {
     @NotBlank
     private String content;
 
-    @NonNull
+    @NotBlank
     private String category;
 
     private boolean urgent;
